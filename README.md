@@ -30,7 +30,7 @@ Projenin çalışabilmesi için aşağıdaki yazılımların sisteminizde yükl�
 1. **Repository'yi klonlayın:**
 
     ```bash
-    git clone [https://github.com/kullanıcı_adı/todo-app.git](https://github.com/GamzeBerberogl/todo-app)
+    git clone https://github.com/GamzeBerberogl/todo-app
     cd todo-app
     ```
 
