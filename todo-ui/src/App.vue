@@ -1,85 +1,136 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <div id="app">
+    <nav class="flex items-center justify-between p-4 bg-gray-50 shadow-md">
+      <div class="flex items-center">
+        <span class="text-xl font-semibold text-gray-800">Todo App</span>
+      </div>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <div v-if="isAuthenticated && !isAuthOrHomeRoute" class="relative">
+        <img
+          @click="toggleDropdown"
+          src="@/assets/profile.png"
+          alt="Profile"
+          class="w-10 h-10 rounded-full cursor-pointer ring-2 ring-offset-1 ring-gray-300 hover:ring-blue-500 transition duration-300"
+        />
+        <transition name="fade">
+          <div
+            v-show="dropdownOpen"
+            class="dropdown absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
+            @click.stop
+          >
+            <router-link
+              to="/profile"
+              class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-t-lg transition duration-200"
+            >
+              Profili Görüntüle
+            </router-link>
+            <router-link
+              to="/todos"
+              class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition duration-200"
+            >
+              Todo's
+            </router-link>
+            <button
+              @click="logout"
+              class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-b-lg transition duration-200"
+            >
+              Çıkış Yap
+            </button>
+          </div>
+        </transition>
+      </div>
+    </nav>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+    <router-view></router-view>
+  </div>
 </template>
 
+<script>
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import axios from 'axios';
+import { API_URL } from '@/config';
+
+export default {
+  setup() {
+    const route = useRoute();
+    const router = useRouter();
+    const dropdownOpen = ref(false);
+
+    // Kullanıcının giriş yapıp yapmadığını kontrol et
+    const isAuthenticated = computed(() => {
+      return !!localStorage.getItem('token');
+    });
+
+    // Giriş sayfası ('/auth') veya ana sayfa ('/home') rotasında olup olmadığını kontrol et
+    const isAuthOrHomeRoute = computed(() => {
+      return route.path === '/auth' || route.path === '/';
+    });
+
+    const toggleDropdown = (event) => {
+      event.stopPropagation(); // Tıklama olayının yayılmasını durdur
+      dropdownOpen.value = !dropdownOpen.value;
+    };
+
+    const handleClickOutside = (event) => {
+      if (dropdownOpen.value && !event.target.closest('.dropdown')) {
+        dropdownOpen.value = false;
+      }
+    };
+
+    onMounted(() => {
+      document.addEventListener('click', handleClickOutside);
+    });
+
+    onBeforeUnmount(() => {
+      document.removeEventListener('click', handleClickOutside);
+    });
+
+    const logout = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          await axios.post(`${API_URL}/auth/logout`, {}, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+          
+          localStorage.removeItem('token');
+          
+          router.push({ name: 'Home' });
+        } else {
+          alert('Oturum açmamışsınız.');
+        }
+      } catch (error) {
+        console.error('Logout failed:', error);
+        alert('Çıkış işlemi başarısız.');
+      }
+    };
+
+    return {
+      isAuthenticated,
+      isAuthOrHomeRoute,
+      dropdownOpen,
+      toggleDropdown,
+      logout,
+    };
+  },
+};
+</script>
+
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
-
 nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+  background-color: #f8fafc;
 }
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+span.text-xl {
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 </style>
