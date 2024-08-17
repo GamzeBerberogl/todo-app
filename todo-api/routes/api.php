@@ -26,7 +26,3 @@ use App\Http\Controllers\UserProfileController;
         Route::put('/todos/{id}', [TodoController::class, 'update']);
         Route::delete('/todos/{id}', [TodoController::class, 'destroy']);
     });
-
-    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
-    Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.update');
-
