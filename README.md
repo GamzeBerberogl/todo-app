@@ -2,13 +2,6 @@
 # Todo Uygulaması
 <img width="1591" alt="Screenshot 2024-08-17 at 07 15 43" src="https://github.com/user-attachments/assets/5d744cab-99ff-4a2a-a22b-24f6582aecaa">
 
-<img width="1591" alt="Screenshot 2024-08-17 at 07 09 12" src="https://github.com/user-attachments/assets/f61065e7-15c5-400d-b67f-ff7c92adb192">
-
-
-
-- **todo-api**: Uygulamanın backend kısmını, yani RESTful API'yi sağlamak için Laravel kullanılarak geliştirilmiştir.
-- **todo-ui**: Uygulamanın frontend kısmını oluşturmak için Vue.js ve TailwindCSS kullanılarak oluşturulmuş modern bir arayüz sağlar.
-
 ## Özellikler
 
 - **Kullanıcı Yönetimi**: Kullanıcı kaydı, giriş yapma ve profil yönetimi.
@@ -16,6 +9,7 @@
 - **Vue.js ile Dinamik Arayüz**: Anlık olarak yapılacaklar listesini yönetme.
 - **TailwindCSS ile Modern Tasarım**: Duyarlı ve kullanıcı dostu arayüz tasarımı.
 
+<img width="1591" alt="Screenshot 2024-08-17 at 07 09 12" src="https://github.com/user-attachments/assets/f61065e7-15c5-400d-b67f-ff7c92adb192">
 
 ## Gereksinimler
 
@@ -27,6 +21,9 @@ Projenin çalışabilmesi için aşağıdaki yazılımların sisteminizde yükl�
 - MySQL veritabanı 
 
 ## Kurulum
+
+- **todo-api**: Uygulamanın backend kısmını, yani RESTful API'yi sağlamak için Laravel kullanılarak geliştirilmiştir.
+- **todo-ui**: Uygulamanın frontend kısmını oluşturmak için Vue.js ve TailwindCSS kullanılarak oluşturulmuş modern bir arayüz sağlar.
 
 ### Genel Kurulum
 
@@ -107,6 +104,3 @@ Projenin çalışabilmesi için aşağıdaki yazılımların sisteminizde yükl�
 
 MIT lisansı altında lisanslanmıştır.
 
----
-
-Bu yapılandırma, projenizin hem API hem de UI kısımlarını kapsayan detaylı bir kurulum ve kullanım kılavuzu sunmaktadır.
