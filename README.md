@@ -15,10 +15,8 @@
 
 Projenin çalışabilmesi için aşağıdaki yazılımların sisteminizde yüklü olması gerekmektedir:
 
-- PHP >= 8.2
-- Composer
-- Node.js & npm/yarn
-- MySQL veritabanı 
+- Docker 
+- Node.js
 
 ## Kurulum
 
@@ -34,64 +32,33 @@ Projenin çalışabilmesi için aşağıdaki yazılımların sisteminizde yükl�
     cd todo-app
     ```
 
-2. **.env dosyasını yapılandırın:**
 
-    - `todo-api` klasöründeki `.env.example` dosyasını kopyalayarak `.env` dosyasını oluşturun ve veritabanı bilgilerini girin.
-    
-    ```bash
-    cp todo-api/.env.example todo-api/.env
-    ```
-
-3. **API Kurulumu (`todo-api`):**
+2. **API Kurulumu (`todo-api`):**
 
     ```bash
     cd todo-api
-    composer install
-    php artisan key:generate
+    docker compose up -d
     ```
 
-4. **Veritabanı migrasyonlarını ve seed işlemini çalıştırın:**
+3. **Veritabanı migrasyonlarını ve seed işlemini çalıştırın:**
 
     ```bash
-    php artisan migrate --seed
+    docker compose exec laravel-app php artisan migrate --seed
     ```
 
     Bu adım, veritabanı tablolarını oluşturur ve test verilerini ekler.
-    Kullanıcı girişi için test veriler:
-     'email' => 'atlas@example.com',
-     'password' => 'password123'
+    Kullanıcı girişi için test veriler: atlas@example.com - password123
 
 
-
-6. **UI Kurulumu (`todo-ui`):**
+4. **UI Kurulumu ve Yerel Sunucuda Çalıştırma(`todo-ui`):**
 
     ```bash
     cd ../todo-ui
-    npm install
-    npm run build
+    npm install && npm run dev
     ```
 
     Bu adım, Vue.js ile oluşturulan frontend'i derleyecektir.
 
-### Geliştirme Sunucusunu Başlatma
-
-1. **API Sunucusunu Başlatın:**
-
-    ```bash
-    cd ../todo-api
-    php artisan serve
-    ```
-
-    API artık `http://localhost:8000` adresinden erişilebilir durumda.
-
-2. **Frontend'i Yerel Sunucuda Çalıştırın:**
-
-    İsterseniz frontend'i de bir geliştirme sunucusunda çalıştırabilirsiniz:
-
-    ```bash
-    cd ../todo-ui
-    npm run dev
-    ```
 
 ## Kullanım
 
