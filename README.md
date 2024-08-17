@@ -1,73 +1,97 @@
 
 # Todo Uygulaması
-<img width="1591" alt="Screenshot 2024-08-17 at 07 15 43" src="https://github.com/user-attachments/assets/5d744cab-99ff-4a2a-a22b-24f6582aecaa">
+
+![Todo Uygulaması Ekran Görüntüsü](https://github.com/user-attachments/assets/5d744cab-99ff-4a2a-a22b-24f6582aecaa)
 
 ## Özellikler
 
-- **Kullanıcı Yönetimi**: Kullanıcı kaydı, giriş yapma ve profil yönetimi.
-- **Todo Yönetimi**: Kullanıcılar todo listeleri oluşturabilir, güncelleyebilir ve silebilir.
-- **Vue.js ile Dinamik Arayüz**: Anlık olarak yapılacaklar listesini yönetme.
-- **TailwindCSS ile Modern Tasarım**: Duyarlı ve kullanıcı dostu arayüz tasarımı.
-
-<img width="1591" alt="Screenshot 2024-08-17 at 07 09 12" src="https://github.com/user-attachments/assets/f61065e7-15c5-400d-b67f-ff7c92adb192">
+- **Kullanıcı Yönetimi**: 
+  - Kullanıcı kaydı ve oturum açma.
+  - Kullanıcı profil yönetimi.
+- **Todo Yönetimi**: 
+  - Dinamik olarak todo listeleri oluşturma, güncelleme ve silme.
+- **Vue.js ile Dinamik Arayüz**: 
+  - Anlık güncellenen ve kullanıcı dostu bir arayüz.
+- **TailwindCSS ile Modern Tasarım**: 
+  - Duyarlı, şık ve kullanıcı odaklı arayüz.
+  
+![Todo Uygulaması Ekran Görüntüsü](https://github.com/user-attachments/assets/f61065e7-15c5-400d-b67f-ff7c92adb192)
 
 ## Gereksinimler
 
-Projenin çalışabilmesi için aşağıdaki yazılımların sisteminizde yüklü olması gerekmektedir:
+Bu projeyi çalıştırmak için aşağıdaki yazılımların sisteminizde yüklü olması gerekmektedir:
 
-- Docker 
-- Node.js
+- **Docker**: Uygulamanın container'larda çalıştırılması için.
+- **Node.js**: Frontend derleme işlemleri için.
+
+## Proje Mimarisi
+
+Uygulama, modern web uygulamaları geliştirme prensiplerine dayanarak iki ana bileşen olarak tasarlanmıştır:
+
+- **Backend** (`todo-api`): Laravel kullanılarak geliştirilmiş RESTful API.
+- **Frontend** (`todo-ui`): Vue.js ve TailwindCSS kullanılarak geliştirilmiş dinamik kullanıcı arayüzü.
 
 ## Kurulum
 
-- **todo-api**: Uygulamanın backend kısmını, yani RESTful API'yi sağlamak için Laravel kullanılarak geliştirilmiştir.
-- **todo-ui**: Uygulamanın frontend kısmını oluşturmak için Vue.js ve TailwindCSS kullanılarak oluşturulmuş modern bir arayüz sağlar.
+### 1. Repository'yi Klonlayın
 
-### Genel Kurulum
+Proje dosyalarını bilgisayarınıza indirin ve dizine geçin:
 
-1. **Repository'yi klonlayın:**
+```bash
+git clone https://github.com/GamzeBerberogl/todo-app
+cd todo-app
+```
 
-    ```bash
-    git clone https://github.com/GamzeBerberogl/todo-app
-    cd todo-app
-    ```
+### 2. API Kurulumu (`todo-api`)
 
+Docker'ı kullanarak backend uygulamasını çalıştırın:
 
-2. **API Kurulumu (`todo-api`):**
+```bash
+cd todo-api
+docker compose up -d
+```
 
-    ```bash
-    cd todo-api
-    docker compose up -d
-    ```
+### 3. Veritabanı Migrasyonlarını ve Seed İşlemlerini Çalıştırın
 
-3. **Veritabanı migrasyonlarını ve seed işlemini çalıştırın:**
+Laravel uygulamanızın veritabanını hazırlamak için:
 
-    ```bash
-    docker compose exec laravel-app php artisan migrate --seed
-    ```
+```bash
+docker compose exec laravel-app php artisan migrate --seed
+```
 
-    Bu adım, veritabanı tablolarını oluşturur ve test verilerini ekler.
-    Kullanıcı girişi için test veriler: atlas@example.com - password123
+Bu komut, veritabanı tablolarını oluşturur ve örnek test verilerini ekler. Test kullanıcısı için bilgiler: 
+- **E-posta**: `atlas@example.com`
+- **Şifre**: `password123`
 
+### 4. UI Kurulumu ve Yerel Sunucuda Çalıştırma (`todo-ui`)
 
-4. **UI Kurulumu ve Yerel Sunucuda Çalıştırma(`todo-ui`):**
+Vue.js ile oluşturulmuş frontend'i kurup çalıştırın:
 
-    ```bash
-    cd ../todo-ui
-    npm install && npm run dev
-    ```
+```bash
+cd ../todo-ui
+npm install && npm run dev
+```
 
-    Bu adım, Vue.js ile oluşturulan frontend'i derleyecektir.
-
+Bu adım, TailwindCSS ile stillendirilmiş, modern ve duyarlı kullanıcı arayüzünü yerel sunucuda çalıştıracaktır.
 
 ## Kullanım
 
-- **Kullanıcı Kaydı ve Giriş**: Uygulamaya yeni kullanıcılar kaydolabilir veya mevcut kullanıcılar giriş yapabilir.
-- **Todo Listesi Yönetimi**: Giriş yaptıktan sonra, kullanıcılar todo listesi oluşturabilir, mevcut görevleri düzenleyebilir veya silebilir.
-- **Responsive Tasarım**: Uygulama, farklı cihaz boyutlarında rahatlıkla kullanılabilir.
+- **Kullanıcı Kaydı ve Giriş**: Yeni kullanıcılar kaydolabilir veya mevcut kullanıcılar giriş yapabilir.
+- **Todo Listesi Yönetimi**: Giriş yaptıktan sonra, kullanıcılar todo listeleri oluşturabilir, mevcut görevleri düzenleyebilir veya silebilir.
+- **Responsive Tasarım**: Uygulama, mobil, tablet ve masaüstü cihazlarda sorunsuz çalışacak şekilde tasarlanmıştır.
 
+## Proje Durumu ve Geliştirme Süreci
+
+- **Proje Durumu**: Tamamlanmış ve test edilmiştir.
+- **Geliştirme Süreci**: SOLID prensipleri, PSR-2 standartları ve AirBnb JavaScript Stil Rehberi göz önünde bulundurularak geliştirilmiştir.
+- **Git Commit Mesajları**: Anlamlı ve projenin gelişimini izlemeyi kolaylaştıran commit mesajları kullanılmıştır.
+
+## Ek Özellikler
+
+- **Docker Entegrasyonu**: Proje Docker ile containerize edilmiştir, bu sayede kurulum ve çalıştırma işlemleri oldukça basittir.
+- **PSR-2 ve AirBnb Kod Standartları**: Kod kalitesi için standartlara uyulmuştur.
 
 ## Lisans
 
-MIT lisansı altında lisanslanmıştır.
+Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
 
