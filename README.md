@@ -1,11 +1,13 @@
 
 # Todo Uygulaması
+<img width="1591" alt="Screenshot 2024-08-17 at 07 15 43" src="https://github.com/user-attachments/assets/5d744cab-99ff-4a2a-a22b-24f6582aecaa">
+
 <img width="1591" alt="Screenshot 2024-08-17 at 07 09 12" src="https://github.com/user-attachments/assets/f61065e7-15c5-400d-b67f-ff7c92adb192">
+
+
 
 - **todo-api**: Uygulamanın backend kısmını, yani RESTful API'yi sağlamak için Laravel kullanılarak geliştirilmiştir.
 - **todo-ui**: Uygulamanın frontend kısmını oluşturmak için Vue.js ve TailwindCSS kullanılarak oluşturulmuş modern bir arayüz sağlar.
-
-<img width="1591" alt="Screenshot 2024-08-17 at 07 15 43" src="https://github.com/user-attachments/assets/5d744cab-99ff-4a2a-a22b-24f6582aecaa">
 
 ## Özellikler
 
