@@ -70,16 +70,16 @@ export default {
           return;
         }
 
-    const response = await axios.get(`${API_URL}/todos`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+        const response = await axios.get(`${API_URL}/todos`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-    this.todos = response.data.data.map((todo) => ({
-      ...todo,
-      editMode: false,
-    }));
+        this.todos = response.data.data.map((todo) => ({
+          ...todo,
+          editMode: false,
+        }));
       } catch (error) {
         console.error('Error fetching todos:', error);
 
@@ -88,20 +88,54 @@ export default {
         }
       }
     },
-    createTodo() {
-        this.newTodo = {
-          id: Date.now(),
-          title: '',
-          description: '',
-          is_completed: 0,
-          editMode: true,
-        };
-        this.todos.push(this.newTodo);
-      },
-      async saveTodo(todo) {
+
+    async createTodo() {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.put(`${API_URL}/todos/${todo.id}`, todo, {
+        if (!token) {
+          alert('Oturum açmalısınız!');
+          this.$router.push('/auth');
+          return;
+        }
+
+        const newTodoData = {
+          title: 'Yeni Görev', 
+          description: '',     
+          is_completed: 0, 
+        };
+
+        const response = await axios.post(`${API_URL}/todos`, newTodoData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        this.todos.push({
+          ...response.data.data,
+          editMode: true, 
+        });
+
+        console.log('Yeni Todo başarıyla oluşturuldu:', response.data);
+
+      } catch (error) {
+        console.error('Error creating todo:', error);
+        alert('Yeni görev oluşturulamadı. Lütfen tekrar deneyin.');
+      }
+    },
+
+    async toggleComplete(todo) {
+      todo.is_completed = todo.is_completed ? 0 : 1;
+      await this.saveTodo(todo);
+    },
+
+    async saveTodo(todo) {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.put(`${API_URL}/todos/${todo.id}`, {
+          title: todo.title,
+          description: todo.description,
+          is_completed: todo.is_completed,
+        }, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -111,12 +145,13 @@ export default {
       } catch (error) {
         console.error('Error saving todo:', error);
         alert('Görev kaydedilemedi. Lütfen tekrar deneyin.');
-      };
+      }
     },
+
     async deleteTodo(id) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`${API_URL}todos/${id}`, {
+        await axios.delete(`${API_URL}/todos/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -124,21 +159,21 @@ export default {
         this.todos = this.todos.filter((todo) => todo.id !== id);
       } catch (error) {
         console.error('Error deleting todo:', error);
+        alert('Görev silinemedi. Lütfen tekrar deneyin.');
       }
     },
+
     toggleEditMode(todo) {
       todo.editMode = !todo.editMode;
     },
+
     setEditMode(todo, mode) {
       todo.editMode = mode;
-    },
-    async toggleComplete(todo) {
-      todo.is_completed = todo.is_completed ? 0 : 1;
-      await this.saveTodo(todo);
     },
   },
 };
 </script>
+
 
 <style scoped>
 .todos-container {

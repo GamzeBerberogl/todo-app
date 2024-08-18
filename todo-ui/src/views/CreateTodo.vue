@@ -51,7 +51,7 @@ export default {
         this.$router.push('/todos');
       } catch (error) {
         console.error('Todo creation failed:', error);
-        alert('Failed to create todo. Please try again.');
+        alert('Görev oluşturulamadı. Lütfen tekrar deneyin.');
       }
     },
   },
