@@ -79,12 +79,12 @@ export default {
         alert('Şifre başarıyla değiştirildi!');
         this.$router.push('/profile'); 
       } catch (error) {
+        const errorMessage = error.response?.data?.message || 'Şifre değiştirilemedi. Lütfen tekrar deneyin.';
+        alert(errorMessage);
         console.error('Şifre değiştirilemedi:', error);
-        alert('Şifre değiştirilemedi. Lütfen tekrar deneyin.');
       }
     },
-},
-
+  },
 };
 </script>
 

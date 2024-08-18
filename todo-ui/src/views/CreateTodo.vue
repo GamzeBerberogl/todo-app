@@ -33,6 +33,11 @@ export default {
     };
   },
   methods: {
+    handleError(error, defaultMessage) {
+      const errorMessage = error.response?.data?.message || defaultMessage;
+      alert(errorMessage);
+      console.error(errorMessage, error);
+    },
     async createTodo() {
       try {
         const token = localStorage.getItem('token');

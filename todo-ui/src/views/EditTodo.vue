@@ -36,15 +36,32 @@
       this.todo = response.data;
     },
     methods: {
-      async updateTodo() {
-        const id = this.$route.params.id;
-        const token = localStorage.getItem('token');
-        await axios.put(`${API_URL}/todos/${id}`, this.todo, {
-          headers: {
-            Authorization: `Bearer ${token}`
+      handleError(error, defaultMessage) {
+        const errorMessage = error.response?.data?.message || defaultMessage;
+        alert(errorMessage);
+        console.error(errorMessage, error);
+      },
+      methods: {
+        async updateTodo() {
+          try {
+            const id = this.$route.params.id;
+            const token = localStorage.getItem('token');
+            await axios.put(`${API_URL}/todos/${id}`, this.todo, {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            });
+            this.$router.push('/');
+          } catch (error) {
+            this.handleError(error, 'Görev güncellenemedi.');
           }
-        });
-        this.$router.push('/');
+        },
+
+        handleError(error, defaultMessage) {
+          const errorMessage = error.response?.data?.message || defaultMessage;
+          alert(errorMessage);
+          console.error(errorMessage, error);
+        }
       }
     }
   };

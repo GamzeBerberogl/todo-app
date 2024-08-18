@@ -62,6 +62,11 @@ export default {
     this.fetchTodos();
   },
   methods: {
+    handleError(error, defaultMessage) {
+      const errorMessage = error.response?.data?.message || defaultMessage;
+      alert(errorMessage);
+      console.error(errorMessage, error);
+    },
     async fetchTodos() {
       try {
         const token = localStorage.getItem('token');
@@ -81,14 +86,9 @@ export default {
           editMode: false,
         }));
       } catch (error) {
-        console.error('Error fetching todos:', error);
-
-        if (error.response && error.response.status === 401) {
-          this.$router.push('/auth');
-        }
+        this.handleError(error, 'Yapılacaklar listesi alınamadı.');
       }
     },
-
     async createTodo() {
       try {
         const token = localStorage.getItem('token');
@@ -110,19 +110,16 @@ export default {
           },
         });
 
-        this.todos.push({
+        this.todos.unshift({
           ...response.data.data,
           editMode: true, 
         });
 
         console.log('Yeni Todo başarıyla oluşturuldu:', response.data);
-
       } catch (error) {
-        console.error('Error creating todo:', error);
-        alert('Yeni görev oluşturulamadı. Lütfen tekrar deneyin.');
+        this.handleError(error, 'Yeni görev oluşturulamadı.');
       }
     },
-
     async toggleComplete(todo) {
       todo.is_completed = todo.is_completed ? 0 : 1;
       await this.saveTodo(todo);
@@ -140,11 +137,10 @@ export default {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log('Todo saved successfully', response.data);
+        console.log('Todo başarıyla kaydedildi:', response.data);
         todo.editMode = false;
       } catch (error) {
-        console.error('Error saving todo:', error);
-        alert('Görev kaydedilemedi. Lütfen tekrar deneyin.');
+        this.handleError(error, 'Görev kaydedilemedi.');
       }
     },
 
@@ -158,8 +154,7 @@ export default {
         });
         this.todos = this.todos.filter((todo) => todo.id !== id);
       } catch (error) {
-        console.error('Error deleting todo:', error);
-        alert('Görev silinemedi. Lütfen tekrar deneyin.');
+        this.handleError(error, 'Görev silinemedi.');
       }
     },
 

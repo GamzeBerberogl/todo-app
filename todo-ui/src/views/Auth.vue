@@ -88,34 +88,44 @@
         this.isLogin = login;
       },
       async login() {
-        try {
-          const response = await axios.post(`${API_URL}/auth/login`, {
-            email: this.email,
-            password: this.password,
-          });
-  
-          const token = response.data.token;
-          localStorage.setItem('token', token);
-          this.$router.push('/todos');
-        } catch (error) {
-          console.error('Login failed:', error);
-          alert('Giriş başarısız. Lütfen bilgilerinizi kontrol edin.');
-        }
-      },
-      async register() {
-        try {
-          await axios.post(`${API_URL}/auth/register`, {
-            name: this.name,
-            email: this.email,
-            password: this.password,
-            password_confirmation: this.passwordConfirmation,
-          });
-          this.toggleForm(true); 
-        } catch (error) {
-          console.error('Kayıt işlemi başarısız:', error);
-          alert('Kayıt işlemi başarısız. Lütfen tekrar deneyin.');
-        }
-      },
+  try {
+    const response = await axios.post(`${API_URL}/auth/login`, {
+      email: this.email,
+      password: this.password,
+    });
+
+    const token = response.data.token;
+    localStorage.setItem('token', token);
+    this.$router.push('/todos');
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.message) {
+      alert(`Giriş başarısız: ${error.response.data.message}`);
+    } else {
+      console.error('Login failed:', error);
+      alert('Giriş başarısız. Lütfen bilgilerinizi kontrol edin.');
+    }
+  }
+},
+
+async register() {
+  try {
+    await axios.post(`${API_URL}/auth/register`, {
+      name: this.name,
+      email: this.email,
+      password: this.password,
+      password_confirmation: this.passwordConfirmation,
+    });
+    this.toggleForm(true); 
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.message) {
+      alert(`Kayıt işlemi başarısız: ${error.response.data.message}`);
+    } else {
+      console.error('Kayıt işlemi başarısız:', error);
+      alert('Kayıt işlemi başarısız. Lütfen tekrar deneyin.');
+    }
+  }
+}
+
     },
   };
   </script>
