@@ -51,7 +51,15 @@ cd todo-api
 docker compose up -d
 ```
 
-### 3. Veritabanı Migrasyonlarını ve Seed İşlemlerini Çalıştırın
+### 3. Bağımlılıkları Yükleyin
+
+Laravel uygulaması için gerekli olan PHP bağımlılıklarını yükleyin:
+
+```bash
+docker compose exec laravel-app composer install
+```
+
+### 4. Veritabanı Migrasyonlarını ve Seed İşlemlerini Çalıştırın
 
 Laravel uygulamanızın veritabanını hazırlamak için:
 
